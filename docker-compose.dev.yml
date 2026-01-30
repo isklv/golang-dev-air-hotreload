@@ -1,0 +1,17 @@
+services:
+  svc:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: dev
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        target: /app/tmp

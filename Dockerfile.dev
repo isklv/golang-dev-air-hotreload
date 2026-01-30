@@ -1,0 +1,18 @@
+FROM golang:1.25-alpine AS dev
+
+WORKDIR /app
+
+RUN apk add --no-cache git make
+
+# Install air for hot reloading
+RUN go install github.com/air-verse/air@latest
+
+COPY go.mod ./
+RUN go mod tidy
+RUN go mod download
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["air", "-c", ".air.toml"]
