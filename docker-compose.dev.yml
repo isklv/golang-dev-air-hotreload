@@ -10,8 +10,8 @@ services:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
     volumes:
-      - type: bind
-        source: .
-        target: /app
-      - type: volume
-        target: /app/tmp
+      - .:/app:Z
+      - go_cache:/app/tmp
+
+volumes:
+  go_cache:

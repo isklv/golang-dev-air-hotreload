@@ -106,21 +106,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: svc-dev
-    volumes:
-      - type: bind
-        source: .
-        target: /app
-      - type: volume
-        target: /app/tmp          # монтируем исходники для live-reload
+      target: dev
     ports:
-      - "8080:8080"     # пробрасываем порт сервиса
+      - "8080:8080"
     environment:
-      - GO_ENV=development
-    # при необходимости: depends_on: [db, redis, ...]
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+    volumes:
+      - .:/app:Z
+      - go_cache:/app/tmp
 
 volumes:
-  go-cache:
+  go_cache:
 ```
 
-Благодаря volume `.:/app` Air внутри контейнера видит изменения локального кода и перезапускает приложение без пересборки самого контейнера. [betterprogramming](https://betterprogramming.pub/a-good-way-to-do-live-reload-for-go-b3707eb47336)
+Благодаря volume `.:/app:Z` Air внутри контейнера видит изменения локального кода и перезапускает приложение без пересборки самого контейнера. [betterprogramming](https://betterprogramming.pub/a-good-way-to-do-live-reload-for-go-b3707eb47336)
