@@ -61,7 +61,7 @@ tmp_dir = "tmp"
 
 [build]
 cmd = "go build -o ./tmp/app ./cmd/app"
-enrrypoint = "./tmp/app"
+entrypoint = "./tmp/app"
 include_ext = ["go"]
 exclude_dir = ["tmp", "vendor"]
 
